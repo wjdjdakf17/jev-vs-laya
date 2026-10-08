@@ -26,6 +26,7 @@ Jev는 **판단만 한다** — 미리 정의된 선택지·척도·명제에 �
 | `src/calibration.ts` | 보정 측정 도구 — Brier score, 신뢰도 버킷, ECE |
 | `src/providers/requesty.ts` | 진짜 Jev 호출 클라이언트 (Requesty 라우터 경유, 키 필요) |
 | `scripts/make_ticket_data.py` | 실습용 한국어 티켓 데이터셋 생성기 (jevlike 학습용) |
+| `examples/laya-vs-gpt.ts` | Laya(오픈소스 Jev 대안, 로컬) vs GPT-5 실측 비교 — 정확도·지연·비용 |
 | `tests/` | 37개 테스트 (타입 계산 / 목업 계약 / 정책 / 보정 수학 / 셔플드 컨트롤 / Requesty 프로바이더 계약) |
 
 ## 빠른 시작
@@ -55,6 +56,7 @@ npm run example # 티켓 3종 라우팅 데모
 5. [참고자료](docs/05-references.md) — 1차 소스와 코드-개념 대응표
 6. [오픈소스 구현 해부 — jevlike](docs/06-jevlike-open-implementation.md) — 옵션-어텐션 아키텍처, ECE·셔플드 컨텍스트 컨트롤 평가법, 100배 속도의 독립 정황 증거
 7. [실습 — 로컬 학습](docs/07-hands-on-local-training.md) — 이 레포 티켓 데이터로 결정 모델을 직접 학습(top-1 88%·ECE 0.056), 목업 vs 학습 모델 비교
+8. [Laya — 오픈소스 Jev 대안 실측](docs/08-laya-vs-llm.md) — 같은 티켓으로 Laya(로컬 무료) vs GPT-5(API) 비교: 26배 빠르고 $0, 보정의 두 얼굴
 
 ## 핵심 요약 (내 3줄)
 

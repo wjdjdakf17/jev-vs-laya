@@ -1,0 +1,12 @@
+{"context": "제목: 청구 내역이 이상해요\n본문: 영수증에 안 쓴 내용이 청구됐습니다. 결제 내역 확인 부탁드려요.", "options": ["billing", "technical", "account"], "label": 0}
+{"context": "제목: 앱이 켜지지 않아요\n본문: 실행하면 시작 화면에서 바로 꺼집니다. 재설치해도 같은 증상입니다.", "options": ["billing", "technical", "account"], "label": 1}
+{"context": "제목: 동기화가 안 됩니다\n본문: 모바일에서 저장한 내용이 데스크톱에 반영되지 않아요.", "options": ["billing", "technical", "account"], "label": 1}
+{"context": "제목: 파일 업로드 실패\n본문: 이미지를 올리면 업로드 에러가 나면서 실패합니다.", "options": ["billing", "technical", "account"], "label": 1}
+{"context": "제목: 비밀번호를 잊었어요\n본문: 가입한 이메일로 재설정 메일이 오지 않습니다.", "options": ["billing", "technical", "account"], "label": 2}
+{"context": "제목: 개인정보 조회 요청\n본문: 내 계정에 어떤 정보가 저장돼 있는지 확인하고 싶습니다.", "options": ["billing", "technical", "account"], "label": 2}
+{"context": "제목: 파일 업로드 실패\n본문: 이미지를 올리면 업로드 에러가 나면서 실패합니다.", "options": ["billing", "technical", "account"], "label": 1}
+{"context": "제목: 프로필 수정이 안 저장돼요\n본문: 계정 설정에서 이름을 바꿔도 저장이 안 됩니다.", "options": ["billing", "technical", "account"], "label": 2}
+{"context": "제목: 구독 결제 문의\n본문: 구독 요금이 인상됐나요? 이번 달 청구 금액이 다릅니다.", "options": ["billing", "technical", "account"], "label": 0}
+{"context": "제목: 다른 기기에서 로그인 관리\n본문: 분실한 폰에서 로그인된 계정을 원격으로 로그아웃하고 싶어요.", "options": ["billing", "technical", "account"], "label": 2}
+{"context": "제목: 결제 수단 변경하고 싶어요\n본문: 카드를 새로 발급했는데 결제 수단 등록이 안 됩니다.", "options": ["billing", "technical", "account"], "label": 0}
+{"context": "제목: 영수증 재발급 부탁드려요\n본문: 회사 경비 처리용으로 결제 영수증이 필요합니다.", "options": ["billing", "technical", "account"], "label": 0}

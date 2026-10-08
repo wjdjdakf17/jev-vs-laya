@@ -1,0 +1,17 @@
+{"context": "제목: 결제가 두 번 청구됐습니다\n본문: 어제 구독 결제가 카드에 두 번 들어갔어요. 환불 부탁드립니다.", "options": ["billing", "technical", "account"], "label": 0}
+{"context": "제목: 결제 수단 변경하고 싶어요\n본문: 카드를 새로 발급했는데 결제 수단 등록이 안 됩니다.", "options": ["billing", "technical", "account"], "label": 0}
+{"context": "제목: 동기화가 안 됩니다\n본문: 모바일에서 저장한 내용이 데스크톱에 반영되지 않아요.", "options": ["billing", "technical", "account"], "label": 1}
+{"context": "제목: 이메일 인증 메일이 안 와요\n본문: 가입했는데 인증 메일을 받지 못했습니다.", "options": ["billing", "technical", "account"], "label": 2}
+{"context": "제목: 결제가 두 번 청구됐습니다\n본문: 어제 구독 결제가 카드에 두 번 들어갔어요. 환불 부탁드립니다.", "options": ["billing", "technical", "account"], "label": 0}
+{"context": "제목: 새 계정 만들었는데 결제 내역이 이어지나요?\n본문: 기존 계정을 탈퇴하고 새로 가입했습니다. 구독 결제는 어떻게 되나요?", "options": ["billing", "technical", "account"], "label": 2}
+{"context": "제목: 결제 페이지에서 로그인 에러가 나요\n본문: 결제하려고 들어갔는데 로그인하라고 하고, 하면 에러가 납니다.", "options": ["billing", "technical", "account"], "label": 1}
+{"context": "제목: 로딩이 너무 느려요\n본문: 목록을 열 때마다 수 분씩 로딩 중에 걸립니다.", "options": ["billing", "technical", "account"], "label": 1}
+{"context": "제목: 프로필 수정이 안 저장돼요\n본문: 계정 설정에서 이름을 바꿔도 저장이 안 됩니다.", "options": ["billing", "technical", "account"], "label": 2}
+{"context": "제목: 환불하면 계정도 삭제되나요?\n본문: 환불을 요청하려는데 계정은 유지하고 싶습니다.", "options": ["billing", "technical", "account"], "label": 0}
+{"context": "제목: 결제 수단 변경하고 싶어요\n본문: 카드를 새로 발급했는데 결제 수단 등록이 안 됩니다.", "options": ["billing", "technical", "account"], "label": 0}
+{"context": "제목: 화면이 하얗게 나옵니다\n본문: 특정 메뉴에 들어가면 빈 화면이 뜹니다. 버그인 것 같아요.", "options": ["billing", "technical", "account"], "label": 1}
+{"context": "제목: 프로필 수정이 안 저장돼요\n본문: 계정 설정에서 이름을 바꿔도 저장이 안 됩니다.", "options": ["billing", "technical", "account"], "label": 2}
+{"context": "제목: 구독 결제 후 프리미엄이 안 열려요\n본문: 결제는 됐는데 프리미엄 기능에 접근하면 오류가 뜹니다.", "options": ["billing", "technical", "account"], "label": 1}
+{"context": "제목: 계정 삭제하면 진행 중인 환불은?\n본문: 탈퇴하면 처리 중인 환불 요청도 취소되는지 궁금합니다.", "options": ["billing", "technical", "account"], "label": 2}
+{"context": "제목: 다른 기기에서 로그인 관리\n본문: 분실한 폰에서 로그인된 계정을 원격으로 로그아웃하고 싶어요.", "options": ["billing", "technical", "account"], "label": 2}
+{"context": "제목: 앱이 켜지지 않아요\n본문: 실행하면 시작 화면에서 바로 꺼집니다. 재설치해도 같은 증상입니다.", "options": ["billing", "technical", "account"], "label": 1}
