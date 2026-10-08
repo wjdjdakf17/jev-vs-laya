@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laya vs GPT-5 — 티켓 판단 실험실</title>
+<style>
+  :root {
+    --bg: #0d1117; --card: #161b22; --border: #30363d;
+    --text: #e6edf3; --muted: #8b949e;
+    --green: #3fb950; --purple: #a371f7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: 'Apple SD Gothic Neo', Pretendard, sans-serif;
+    display: flex; justify-content: center; min-height: 100vh; padding: 40px 20px;
+  }
+  .wrap { width: 100%; max-width: 980px; }
+  h1 { font-size: 26px; margin: 0 0 6px; }
+  h1 .vs { color: var(--muted); font-weight: 400; }
+  .sub { color: var(--muted); font-size: 14px; margin-bottom: 28px; }
+  .panel { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+  label { font-size: 13px; color: var(--muted); display: block; margin-bottom: 8px; }
+  textarea {
+    width: 100%; height: 110px; background: var(--bg); color: var(--text);
+    border: 1px solid var(--border); border-radius: 10px; padding: 14px;
+    font-size: 15px; font-family: inherit; resize: vertical;
+  }
+  textarea:focus { outline: 1px solid var(--green); }
+  .row { display: flex; gap: 12px; margin-top: 14px; align-items: center; flex-wrap: wrap; }
+  select {
+    background: var(--bg); color: var(--text); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 12px; font-size: 14px; font-family: inherit; flex: 1; min-width: 200px;
+  }
+  button {
+    background: var(--green); color: #0d1117; border: 0; border-radius: 10px;
+    padding: 12px 26px; font-size: 15px; font-weight: 700; font-family: inherit; cursor: pointer;
+  }
+  button:disabled { opacity: 0.5; cursor: wait; }
+  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+  @media (max-width: 720px) { .cards { grid-template-columns: 1fr; } }
+  .result { opacity: 0; transform: translateY(8px); transition: all .4s; }
+  .result.show { opacity: 1; transform: none; }
+  .rcard { border-radius: 14px; padding: 20px; background: var(--card); }
+  .rcard.laya { border: 1px solid #3fb95066; }
+  .rcard.gpt { border: 1px solid #a371f766; }
+  .rcard h3 { margin: 0 0 4px; font-size: 15px; }
+  .rcard.laya h3 { color: var(--green); }
+  .rcard.gpt h3 { color: var(--purple); }
+  .badge { font-size: 12px; color: var(--muted); }
+  .pick { font-size: 30px; font-weight: 800; margin: 10px 0 2px; font-family: 'SF Mono', Menlo, monospace; }
+  .lat { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+  .lat b { color: var(--text); }
+  .bar { margin: 7px 0; }
+  .bar .lbl { display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 3px; }
+  .bar .lbl .pct { font-family: 'SF Mono', Menlo, monospace; }
+  .track { height: 9px; background: var(--bg); border-radius: 99px; overflow: hidden; }
+  .fill { height: 100%; border-radius: 99px; width: 0; transition: width .7s cubic-bezier(.2,.8,.2,1); }
+  .fill.billing { background: var(--green); }
+  .fill.technical { background: #58a6ff; }
+  .fill.account { background: var(--purple); }
+  .gptconf { font-size: 14px; color: var(--muted); }
+  .gptconf b { color: var(--text); font-size: 20px; }
+  .meta { font-size: 12px; color: var(--muted); margin-top: 12px; line-height: 1.7; }
+  .verdict { margin-top: 18px; padding: 14px 18px; border-radius: 10px; background: #1c2634; font-size: 14px; display: none; }
+  .verdict b { color: var(--green); }
+  .spin { display: inline-block; animation: pulse 1s infinite; }
+  @keyframes pulse { 50% { opacity: .4; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Laya <span class="vs">vs</span> GPT-5</h1>
+  <div class="sub">티켓 판단 실험실 — Laya는 이 맥북에서 직접, GPT-5는 실제 OpenAI API 호출 (건당 약 $0.002)</div>
+
+  <div class="panel">
+    <label>지원 티켓 입력 (제목: / 본문: 형식 권장)</label>
+    <textarea id="ticket">제목: 결제 페이지에서 로그인 에러가 나요
+본문: 결제하려고 들어갔는데 로그인하라고 하고, 하면 에러가 납니다.</textarea>
+    <div class="row">
+      <select id="preset">
+        <option value="">— 프리셋 선택 —</option>
+        <option>제목: 결제가 두 번 청구됐습니다
+본문: 어제 구독 결제가 카드에 두 번 들어갔어요. 환불 부탁드립니다.</option>
+        <option>제목: 동기화가 안 됩니다
+본문: 모바일에서 저장한 내용이 데스크톱에 반영되지 않아요.</option>
+        <option>제목: 환불하면 계정도 삭제되나요?
+본문: 환불을 요청하려는데 계정은 유지하고 싶습니다.</option>
+        <option>제목: 앱이 켜지지 않아요
+본문: 실행하면 시작 화면에서 바로 꺼집니다. 재설치해도 같은 증상입니다.</option>
+      </select>
+      <button id="go">판단 요청</button>
+    </div>
+  </div>
+
+  <div class="cards">
+    <div class="rcard laya result" id="layaCard">
+      <h3>Laya <span class="badge">로컬 · $0</span></h3>
+      <div class="pick" id="layaPick">—</div>
+      <div class="lat"><b id="layaMs">—</b> · 입력 <b id="layaTok">—</b> 토큰 · 출력 0 (생성 없음)</div>
+      <div id="layaBars"></div>
+    </div>
+    <div class="rcard gpt result" id="gptCard">
+      <h3>GPT-5 <span class="badge">OpenAI API · 유료</span></h3>
+      <div class="pick" id="gptPick">—</div>
+      <div class="lat"><b id="gptMs">—</b> · 입출력 <b id="gptTok">—</b> 토큰</div>
+      <div class="gptconf">self-confidence: <b id="gptConf">—</b></div>
+      <div class="meta" id="gptCost"></div>
+    </div>
+  </div>
+
+  <div class="verdict" id="verdict"></div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const PRESETS = $("preset");
+PRESETS.onchange = () => { if (PRESETS.value) $("ticket").value = PRESETS.value; };
+
+function bars(probs) {
+  return Object.entries(probs)
+    .sort((a, b) => b[1] - a[1])
+    .map(([k, v]) => `
+      <div class="bar">
+        <div class="lbl"><span>${k}</span><span class="pct">${(v * 100).toFixed(1)}%</span></div>
+        <div class="track"><div class="fill ${k}" data-w="${(v * 100).toFixed(1)}"></div></div>
+      </div>`).join("");
+}
+
+$("go").onclick = async () => {
+  const context = $("ticket").value.trim();
+  if (!context) return alert("티켓을 입력해라");
+  const btn = $("go");
+  btn.disabled = true; btn.textContent = "판단 중...";
+  ["layaCard", "gptCard"].forEach((id) => $(id).classList.remove("show"));
+  $("verdict").style.display = "none";
+
+  try {
+    const res = await fetch("/api/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ context }),
+    });
+    const j = await res.json();
+    if (j.error) throw new Error(j.error);
+
+    // Laya
+    $("layaPick").textContent = j.laya.choice;
+    $("layaMs").textContent = j.laya.latencyMs.toFixed(0) + "ms";
+    $("layaTok").textContent = j.laya.inputTokens;
+    $("layaBars").innerHTML = bars(j.laya.probabilities);
+    $("layaCard").classList.add("show");
+
+    // GPT
+    if (j.gpt.error) {
+      $("gptPick").textContent = "에러";
+      $("gptConf").textContent = j.gpt.error;
+    } else {
+      $("gptPick").textContent = j.gpt.team;
+      $("gptMs").textContent = j.gpt.latencyMs.toFixed(0) + "ms";
+      $("gptTok").textContent = (j.gpt.promptTokens + j.gpt.completionTokens);
+      $("gptConf").textContent = (j.gpt.confidence * 100).toFixed(0) + "%";
+      const cost = (j.gpt.promptTokens * 1.25 + j.gpt.completionTokens * 10) / 1e6;
+      $("gptCost").innerHTML =
+        `이번 호출 비용: <b>$${cost.toFixed(4)}</b> (in $1.25/M · out $10/M)<br>` +
+        `출력 토큰 ${j.gpt.completionTokens}개 — JSON 몇 줄 치고 많다 (추론 토큰 포함)`;
+    }
+    $("gptCard").classList.add("show");
+
+    // 애니메이션 트리거
+    requestAnimationFrame(() =>
+      document.querySelectorAll(".fill").forEach((f) => (f.style.width = f.dataset.w + "%"))
+    );
+
+    if (!j.gpt.error) {
+      const speedX = (j.gpt.latencyMs / j.laya.latencyMs).toFixed(0);
+      const agree = j.laya.choice === j.gpt.team;
+      $("verdict").style.display = "block";
+      $("verdict").innerHTML = agree
+        ? `두 모델 <b>${j.laya.choice}</b>(으)로 동의 · GPT가 <b>${speedX}배</b> 느림 · Laya 비용 <b>$0</b>`
+        : `불일다 — Laya는 <b>${j.laya.choice}</b>, GPT는 <b>${j.gpt.team}</b> · GPT가 <b>${speedX}배</b> 느림`;
+    }
+  } catch (e) {
+    alert("실패: " + e.message);
+  } finally {
+    btn.disabled = false; btn.textContent = "판단 요청";
+  }
+};
+</script>
+</body>
+</html>
