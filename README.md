@@ -1,4 +1,4 @@
-# jev-study
+# jev-vs-laya
 
 **Jev(TypeSafe AI의 "System One Model")를 공부한 기록 —
 한국어 스터디 노트 + 개념의 TypeScript 타이핑 + 목업 워크플로우 실험.**
@@ -33,7 +33,7 @@ Jev는 **판단만 한다** — 미리 정의된 선택지·척도·명제에 �
 ## 빠른 시작
 
 ```bash
-git clone https://github.com/wjdjdakf17/jev-study && cd jev-study
+git clone https://github.com/wjdjdakf17/jev-vs-laya && cd jev-vs-laya
 npm install
 npm test        # 37 tests
 npm run example # 티켓 3종 라우팅 데모
